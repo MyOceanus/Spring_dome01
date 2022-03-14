@@ -12,6 +12,8 @@ public class User {
     private Set<String> phones;
     private List<String> names;
     private Map<String,String> countries;
+    //新增1
+    private int sum1;
     private Properties files;
     //新增2
     private int sum2;
