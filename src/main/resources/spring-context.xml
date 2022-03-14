@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:aop = "http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 目标：原始业务类-->
+    <bean id="userService" class="com.zdk.service.UserServiceImpl"></bean>
+
+    <!--前置通知：辅助业务类-->
+    <bean id="before" class="com.zdk.advice.MyBeforeAdvice"></bean>
+
+    <!--后置通知-->
+    <bean id="after" class="com.zdk.advice.MyAfterAdvice"></bean>
+
+    <!--故障通知-->
+    <bean id="throws" class="com.zdk.advice.MyThrowsAdvice"></bean>
+
+    <!--环绕通知-->
+    <bean id="interceptor" class="com.zdk.advice.MyMethodInterceptor"></bean>
+
+    <!--编织-->
+    <aop:config>
+        <!--切入点 【修饰符 返回值 包 类 方法名 参数表】 -->
+        <!--expression 描述具体的切入方法-->
+<!--        <aop:pointcut id="pc_shine" expression="execution(* queryUsers())"/>-->
+<!--        <aop:pointcut id="pc_shine2" expression="execution(* deleteUser())"/>-->
+<!--        <aop:pointcut id="pc_shine3" expression="execution(* updateUser())"/>-->
+<!--        <aop:pointcut id="pc_shine4" expression="execution(* saveUser())"/>-->
+<!--        &lt;!&ndash;组装&ndash;&gt;-->
+<!--        <aop:advisor advice-ref="before" pointcut-ref="pc_shine"></aop:advisor>-->
+<!--        <aop:advisor advice-ref="before" pointcut-ref="pc_shine2"></aop:advisor>-->
+<!--        <aop:advisor advice-ref="after" pointcut-ref="pc_shine"></aop:advisor>-->
+<!--        <aop:advisor advice-ref="throws" pointcut-ref="pc_shine3"></aop:advisor>-->
+<!--        <aop:advisor advice-ref="interceptor" pointcut-ref="pc_shine4"></aop:advisor>-->
+                            <!--【修饰符 返回值     包 类     方法名 参数表】 -->
+        <aop:pointcut id="pc01" expression="execution(* *(com.zdk.entity.User))"/>
+        <aop:pointcut id="pc02" expression="execution(* *())"/>
+        <aop:pointcut id="pc03" expression="execution(* saveUser(..))"/>
+        <aop:pointcut id="pc04" expression="execution(java.util.List *(..))"/>
+        <aop:pointcut id="pc05" expression="execution(* com.zdk.service.UserServiceImpl.*(..))"/>
+        <aop:pointcut id="pc06" expression="execution(* com.zdk.service.*.*(..))"/>
+        <aop:pointcut id="pc07" expression="execution(* com..*.*(..))"/>
+
+
+        <aop:advisor advice-ref="before" pointcut-ref="pc07"></aop:advisor>
+
+    </aop:config>
+
+    <bean id="user" class="com.zdk.entity.User"></bean>
+<!--    后处理器-->
+    <bean class="com.zdk.processor.MyBeanPostProcessor"></bean>
+
+</beans>
