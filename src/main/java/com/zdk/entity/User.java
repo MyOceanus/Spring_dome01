@@ -13,6 +13,8 @@ public class User {
     private List<String> names;
     private Map<String,String> countries;
     private Properties files;
+    //新增2
+    private int sum2;
     //自建类型的属性
    // private Address address;
     public Integer getId() {
